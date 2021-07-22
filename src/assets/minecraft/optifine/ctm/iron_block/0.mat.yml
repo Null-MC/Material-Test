@@ -1,0 +1,10 @@
+color:
+  texture: ../values/0.png
+  scale-red: 0.531
+  scale-green: 0.512
+  scale-blue: 0.496
+smooth:
+  texture: ../values/0.png
+  scale: 0
+metal:
+  value: 230

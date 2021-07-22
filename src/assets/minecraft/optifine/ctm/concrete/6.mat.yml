@@ -1,0 +1,5 @@
+color:
+  texture: ../values/6.png
+porosity:
+  texture: ../values/6.png
+  scale: 0.6
