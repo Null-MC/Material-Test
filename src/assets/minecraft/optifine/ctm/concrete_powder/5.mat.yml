@@ -1,0 +1,5 @@
+color:
+  texture: ../values/5.png
+emissive:
+  texture: ../values/5.png
+  scale: 0.5

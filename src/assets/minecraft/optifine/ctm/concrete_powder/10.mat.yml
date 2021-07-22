@@ -1,0 +1,4 @@
+color:
+  texture: ../values/10.png
+emissive:
+  texture: ../values/10.png

@@ -1,0 +1,5 @@
+color:
+  texture: ../values/9.png
+emissive:
+  texture: ../values/9.png
+  scale: 0.9

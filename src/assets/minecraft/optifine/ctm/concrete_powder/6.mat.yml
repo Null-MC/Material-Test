@@ -1,0 +1,5 @@
+color:
+  texture: ../values/6.png
+emissive:
+  texture: ../values/6.png
+  scale: 0.6

@@ -1,0 +1,5 @@
+color:
+  texture: ../values/2.png
+sss:
+  texture: ../values/2.png
+  scale: 0.2

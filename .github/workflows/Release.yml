@@ -1,0 +1,75 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version Number'
+        required: true
+
+jobs:
+  Publish-LabPbr-64x:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker pull null511/pixelgraph
+      - run: |
+          docker run --name pixelgraph --rm --mount src="$(pwd)",target=/content,type=bind null511/pixelgraph \
+            publish -p "//content/src/LabPbr-64x.pack.yml" -z "//content/MaterialTest-LabPbr-64x.zip"
+      - name: Upload LabPbr 64x
+        uses: actions/upload-artifact@v2
+        with:
+          name: MaterialTest-LabPbr-64x
+          path: MaterialTest-LabPbr-64x.zip
+
+  Publish-OldPbr-64x:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker pull null511/pixelgraph
+      - run: |
+          docker run --name pixelgraph --rm --mount src="$(pwd)",target=/content,type=bind null511/pixelgraph \
+            publish -p "//content/src/OldPbr-64x.pack.yml" -z "//content/MaterialTest-OldPbr-64x.zip"
+      - name: Upload OldPbr 64x
+        uses: actions/upload-artifact@v2
+        with:
+          name: MaterialTest-OldPbr-64x
+          path: MaterialTest-OldPbr-64x.zip
+
+  Create-Release:
+    runs-on: ubuntu-latest
+    needs: [Publish-LabPbr-64x, Publish-OldPbr-64x]
+    steps:
+      - name: Download LabPbr 64x
+        uses: actions/download-artifact@v2
+        with:
+          name: MaterialTest-LabPbr-64x
+      - name: Download OldPbr 64x
+        uses: actions/download-artifact@v2
+        with:
+          name: MaterialTest-OldPbr-64x
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.event.inputs.version }}
+          release_name: Release ${{ github.event.inputs.version }}
+      - name: Upload LabPbr 64x
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./MaterialTest-LabPbr-64x.zip
+          asset_name: MaterialTest-LabPbr-64x.zip
+          asset_content_type: application/zip
+      - name: Upload OldPbr 64x
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./MaterialTest-OldPbr-64x.zip
+          asset_name: MaterialTest-OldPbr-64x.zip
+          asset_content_type: application/zip
