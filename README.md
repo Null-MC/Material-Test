@@ -6,6 +6,14 @@ You can find them under _Assets_ in the [Releases](https://github.com/null511/MC
 
 \*The LabPbr 32x release is the recommended version.
 
+## Usage
+
+|Channel|Blocks|
+|-|-|
+|Smoothness|iron_block, gold_block, copper_block|
+|Porosity|concrete|
+|SSS|wool|
+|Emissive|concrete_powder|
 
 ## Editing
 
